@@ -1,0 +1,9 @@
+{
+  "name": "@lawcall/web",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "node ../../scripts/web-server.mjs",
+    "build": "node ../../scripts/build-web.mjs"
+  }
+}
