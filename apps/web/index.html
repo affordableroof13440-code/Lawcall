@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lawcall legal intake dashboard">
+  <title>Lawcall — Intake Dashboard</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/">Lawcall<span>.</span></a>
+    <span class="environment">DEVELOPMENT PREVIEW</span>
+  </header>
+  <main class="shell">
+    <section class="intro">
+      <p class="eyebrow">LEGAL INTAKE OPERATIONS</p>
+      <h1>Good evening.</h1>
+      <p class="muted">Your intake workspace is taking shape.</p>
+    </section>
+    <section class="stats" aria-label="Dashboard overview">
+      <article class="stat"><span>New inquiries</span><strong>—</strong><small>Awaiting database connection</small></article>
+      <article class="stat"><span>Active calls</span><strong>—</strong><small>Awaiting VoIP connection</small></article>
+      <article class="stat"><span>Needs follow-up</span><strong>—</strong><small>Awaiting workflow setup</small></article>
+    </section>
+    <section class="panel">
+      <div class="panel-heading">
+        <div><p class="eyebrow">SYSTEM STATUS</p><h2>Development services</h2></div>
+        <span id="status" class="status">Checking API…</span>
+      </div>
+      <p class="muted">This is a safe starter dashboard. It does not yet collect or store real caller information.</p>
+      <div class="service-row"><span>Lawcall API</span><span id="api-status">Checking…</span></div>
+      <div class="service-row"><span>Grok voice / SIP</span><span>Not connected</span></div>
+      <div class="service-row"><span>Tenant authentication</span><span>Not configured</span></div>
+    </section>
+    <p class="footnote">Legal intake only — not legal advice. Do not enter real client or sensitive personal information in this preview.</p>
+  </main>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
