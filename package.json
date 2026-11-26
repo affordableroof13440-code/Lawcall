@@ -3,14 +3,11 @@
   "private": true,
   "version": "1.0.0",
   "workspaces": [
-    "apps/*",
-    "modules/*",
-    "services/*",
-    "workers/*"
+    "apps/*"
   ],
   "scripts": {
-    "dev": "npm run dev --workspace=apps/api & npm run dev --workspace=apps/web",
-    "build": "npm run build --workspace=apps/api && npm run build --workspace=apps/web",
-    "start": "npm run start --workspace=apps/api"
+    "dev": "node scripts/dev.mjs",
+    "build": "npm run build --workspaces --if-present",
+    "start": "npm run start --workspace=@lawcall/api"
   }
 }
