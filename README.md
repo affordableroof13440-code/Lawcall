@@ -1,33 +1,40 @@
 # Lawcall
 
-Lawcall is an inbound legal-intake and call-management platform for personal-injury and workplace-harassment inquiries.
+Lawcall is a development starter for an AI-assisted legal intake platform for personal-injury and workplace-harassment inquiries.
 
-> Legal intake is not legal advice. The AI must collect facts, not promise representation or evaluate legal validity.
+> Lawcall is not a law firm and must not provide legal advice, promise representation, or decide whether a claim is legally valid.
 
-## Applications
+## Current repository
 
-- `apps/web` — call dashboard
-- `apps/api` — REST API and integration endpoints
+- `apps/web` — responsive dashboard preview
+- `apps/api` — minimal Node.js health-check API
+- `database/schema.sql` — initial PostgreSQL schema (not yet tenant-hardened)
+- `workers/cloudflare` — Cloudflare implementation checklist
+- `scripts` — local development and web build helpers
 
-## Services
+## Run locally
 
-- `services/voice` — LiveKit voice-room and VoIP integration contracts
-- `services/ai` — Groq-powered summarization and 0–100 lead scoring
-- `services/scheduling` — consultation scheduling
-- `services/notifications` — SMS and email notifications
-
-## Infrastructure
-
-- `database/schema.sql` — PostgreSQL schema
-- `workers/cloudflare` — Cloudflare API/ingress Worker
-- `shared/types` — shared TypeScript types
-
-## Development
+Requires Node.js 20 or newer and npm.
 
 ```bash
-cp .env.example .env
 npm install
 npm run dev
 ```
 
-Deploy the API behind a Cloudflare Worker or Tunnel. Configure LiveKit for the telephony connection and Groq for AI processing. Store recordings in an encrypted object-storage/R2 bucket.
+Open the dashboard at http://localhost:3000. The API health endpoint is http://localhost:8787/api/health.
+
+Build the web preview:
+
+```bash
+npm run build
+```
+
+## Integration direction
+
+The planned voice stack is xAI Grok Voice with SIP/VoIP and Cloudflare infrastructure. A SIP provider has not yet been selected. Do not configure production calling until the provider, xAI webhook verification, consent flow, and tenant authentication are implemented.
+
+## Important limitations
+
+This is a scaffold, not a production MVP. The dashboard uses placeholder metrics. The API does not save intake data. Authentication, multi-tenant authorization, xAI voice/SIP, Cloudflare D1/Workers/Durable Objects/R2, recording controls, email/CRM delivery, and automated tests remain to be implemented.
+
+**Do not enter real client, medical, employment, or other sensitive information.** Before handling real callers, implement tenant isolation, role-based access, verified webhooks, encryption, retention/deletion controls, audit logging, recording consent, and a legal/privacy/security review.
