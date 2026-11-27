@@ -111,12 +111,28 @@ export default {
             created_at TEXT NOT NULL
           )
         `).run();
+        let body;
+        try { body = await request.json(); } catch { return json({ error: "Send valid JSON." }, 400); }
+        const clean = (value, max) => typeof value === "string" ? value.trim().slice(0, max) : "";
+        const contactName = clean(body.contact_name, 100);
+        const email = clean(body.email, 160);
+        const phone = clean(body.phone, 40);
+        const matterType = clean(body.matter_type, 80);
+        const details = clean(body.details, 1000);
+        if (!contactName || !matterType) return json({ error: "Contact name and matter type are required." }, 400);
+        if (email && !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) return json({ error: "Enter a valid test email address." }, 400);
+        // Additive migrations keep existing demo databases compatible.
+        for (const statement of [
+          "ALTER TABLE demo_inquiries ADD COLUMN email TEXT",
+          "ALTER TABLE demo_inquiries ADD COLUMN phone TEXT",
+          "ALTER TABLE demo_inquiries ADD COLUMN details TEXT"
+        ]) { try { await env.DB.prepare(statement).run(); } catch {} }
         const id = crypto.randomUUID();
         const createdAt = new Date().toISOString();
         await env.DB.prepare(
-          "INSERT INTO demo_inquiries (id, contact_name, matter_type, status, created_at) VALUES (?, ?, ?, ?, ?)"
-        ).bind(id, "Taylor Demo (TEST)", "Demo matter — not a real client", "New", createdAt).run();
-        return json({ ok: true, inquiry: { id, contact_name: "Taylor Demo (TEST)", matter_type: "Demo matter — not a real client", status: "New", created_at: createdAt } }, 201);
+          "INSERT INTO demo_inquiries (id, contact_name, matter_type, status, created_at, email, phone, details) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+        ).bind(id, contactName, matterType, "New", createdAt, email, phone, details).run();
+        return json({ ok: true, inquiry: { id, contact_name: contactName, matter_type: matterType, status: "New", created_at: createdAt } }, 201);
       } catch (error) {
         return json({ error: "Could not save demo inquiry.", detail: String(error?.message || error) }, 500);
       }
