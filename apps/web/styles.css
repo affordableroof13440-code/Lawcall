@@ -50,3 +50,21 @@ footer{color:#93879e}
 .settings-card code{background:#261c32;color:#e2caff;padding:3px 6px;border-radius:4px}
 .settings-step{padding:12px 0;border-top:1px solid #302638}
 @media(max-width:720px){.settings-card{padding:15px}}
+
+/* Fillable fictional inquiry demo */
+#demo-inquiry-dialog{width:min(540px,calc(100% - 28px));max-height:90vh;overflow:auto;padding:0;border:1px solid #49345f;border-radius:14px;background:#15111d;color:#f4eefb;box-shadow:0 24px 80px #000a}
+#demo-inquiry-dialog::backdrop{background:#05030acc;backdrop-filter:blur(3px)}
+#demo-inquiry-form{padding:22px;display:grid;gap:13px}
+.demo-form-head{display:flex;justify-content:space-between;align-items:center}
+.demo-form-head .eyebrow{margin:0 0 5px;color:#b18aff}
+.demo-form-head h2{font:700 20px Manrope;margin:0}
+.demo-close{border:0;background:#2b2037;color:#eee;font-size:24px;border-radius:7px;width:34px;height:34px;cursor:pointer}
+.demo-warning{margin:0;padding:11px 12px;border:1px solid #72542c;border-radius:8px;background:#2d2418;color:#f2d49a;font-size:11px;line-height:1.55}
+#demo-inquiry-form>label{display:grid;gap:6px;color:#d9cde5;font-size:11px;font-weight:700}
+#demo-inquiry-form input,#demo-inquiry-form select,#demo-inquiry-form textarea{width:100%;padding:11px;border:1px solid #443650;border-radius:7px;background:#0e0b14;color:#f5effb;font:12px "DM Sans";outline:none}
+#demo-inquiry-form input:focus,#demo-inquiry-form select:focus,#demo-inquiry-form textarea:focus{border-color:#a56bff}
+.demo-form-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:4px}
+.demo-form-actions button{padding:10px 14px;border-radius:7px;border:1px solid #49385a;background:#241b30;color:#e8dff1;font-weight:700;cursor:pointer}
+.demo-form-actions .demo-save{background:#773bd0;border-color:#773bd0;color:white}
+.demo-form-actions button:disabled{opacity:.6;cursor:wait}
+.demo-form-foot{margin:0;color:#9f91ad;font-size:9px}
