@@ -1,3 +1,4 @@
+// Cloudflare Workers configuration for Lawcall.
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "lawcall",
