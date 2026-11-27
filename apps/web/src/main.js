@@ -40,7 +40,7 @@ function openInquiryForm(){
       <p class="demo-warning">Use made-up information only. This is a demo form, not secure real-client intake. Do not enter actual client details, confidential facts, or sensitive information.</p>
       <label>Contact name <input name="contact_name" maxlength="100" required placeholder="e.g. Alex Test"></label>
       <label>Email <input name="email" type="email" maxlength="160" placeholder="alex@example.test"></label>
-      <label>Phone <input name="phone" type="tel" maxlength="40" placeholder="555-0100"></label>
+      <label>Phone <input name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="12" placeholder="555-555-0123"></label>
       <label>Matter type <select name="matter_type" required><option value="">Choose a matter type</option><option>Personal injury</option><option>Family law</option><option>Employment law</option><option>Criminal defense</option><option>Immigration</option><option>Estate planning</option><option>Other (test)</option></select></label>
       <label>Short test description <textarea name="details" maxlength="1000" rows="4" placeholder="Enter a fictional example only"></textarea></label>
       <div class="demo-form-actions"><button type="button" class="demo-cancel">Cancel</button><button type="submit" class="demo-save">Save test inquiry</button></div>
@@ -48,6 +48,11 @@ function openInquiryForm(){
     </form>`;
   document.body.append(dialog);
   const close=()=>dialog.close();
+  const phoneInput=dialog.querySelector('input[name="phone"]');
+  phoneInput.addEventListener("input",()=>{
+    const digits=phoneInput.value.replace(/\\D/g,"").slice(0,10);
+    phoneInput.value=digits.length>6?digits.slice(0,3)+"-"+digits.slice(3,6)+"-"+digits.slice(6):digits.length>3?digits.slice(0,3)+"-"+digits.slice(3):digits;
+  });
   dialog.querySelector(".demo-close").addEventListener("click",close);
   dialog.querySelector(".demo-cancel").addEventListener("click",close);
   dialog.addEventListener("click",event=>{if(event.target===dialog)close()});
