@@ -1,15 +1,1 @@
-const apiStatus = document.querySelector("#api-status");
-const badge = document.querySelector("#status");
-
-try {
-  const response = await fetch("/api/health");
-  if (!response.ok) throw new Error("API unavailable");
-  const data = await response.json();
-  apiStatus.textContent = data.ok ? "Online" : "Unavailable";
-  badge.textContent = "API connected";
-  badge.style.color = "#18794e";
-  badge.style.background = "#e8f7ef";
-} catch {
-  apiStatus.textContent = "Not reachable";
-  badge.textContent = "API offline";
-}
+const toast=document.querySelector("#toast");let timer;document.querySelector("#new")?.addEventListener("click",()=>{toast.textContent="New inquiries will be enabled after secure client-intake storage is connected.";toast.classList.add("show");clearTimeout(timer);timer=setTimeout(()=>toast.classList.remove("show"),3500)});try{const r=await fetch("/api/health");if(!r.ok)throw Error();await r.json()}catch(e){console.info("API health check unavailable in preview")}
