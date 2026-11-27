@@ -1,10 +1,11 @@
 const apiStatus = document.querySelector("#api-status");
 const badge = document.querySelector("#status");
+
 try {
-  const response = await fetch("http://localhost:8787/api/health");
+  const response = await fetch("/api/health");
   if (!response.ok) throw new Error("API unavailable");
   const data = await response.json();
-  apiStatus.textContent = data.ok ? "Online (development)" : "Unavailable";
+  apiStatus.textContent = data.ok ? "Online" : "Unavailable";
   badge.textContent = "API connected";
   badge.style.color = "#18794e";
   badge.style.background = "#e8f7ef";
