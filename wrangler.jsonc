@@ -4,6 +4,19 @@
   "name": "lawcall",
   "main": "workers/cloudflare/index.mjs",
   "compatibility_date": "2026-11-26",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "lawcalldata",
+      "database_id": "46d2af70-caf9-4461-9e56-cbc07e8d54e1"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "FILES",
+      "bucket_name": "lawcall"
+    }
+  ],
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
