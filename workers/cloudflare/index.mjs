@@ -120,7 +120,7 @@ export default {
         const matterType = clean(body.matter_type, 80);
         const details = clean(body.details, 1000);
         if (!contactName || !matterType) return json({ error: "Contact name and matter type are required." }, 400);
-        if (email && !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) return json({ error: "Enter a valid test email address." }, 400);
+        if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json({ error: "Enter a valid test email address." }, 400);
         // Additive migrations keep existing demo databases compatible.
         for (const statement of [
           "ALTER TABLE demo_inquiries ADD COLUMN email TEXT",
