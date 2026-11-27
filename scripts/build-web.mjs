@@ -1,6 +1,16 @@
 import { cp, mkdir, rm } from "node:fs/promises";
+
+const source = new URL("../apps/web/", import.meta.url);
 const output = new URL("../dist/", import.meta.url);
+
 await rm(output, { recursive: true, force: true });
 await mkdir(output, { recursive: true });
-await cp(new URL("../apps/web/", import.meta.url), output, { recursive: true });
+
+await cp(source, output, {
+  recursive: true,
+  filter: (path) =>
+    !path.includes("/node_modules/") &&
+    !path.includes("/dist/"),
+});
+
 console.log("Web app built to dist/");
