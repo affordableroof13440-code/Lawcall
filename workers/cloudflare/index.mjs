@@ -97,10 +97,56 @@ export default {
       return groqTranscribe(request, env);
     }
 
+    // Demo-only persistence: accepts no caller-supplied personal information.
+    // Real client intake remains disabled until authentication and tenant isolation ship.
+    if (url.pathname === "/api/demo/inquiries" && request.method === "POST") {
+      if (!env.DB) return json({ error: "D1 binding DB is missing." }, 503);
+      try {
+        await env.DB.prepare(`
+          CREATE TABLE IF NOT EXISTS demo_inquiries (
+            id TEXT PRIMARY KEY,
+            contact_name TEXT NOT NULL,
+            matter_type TEXT NOT NULL,
+            status TEXT NOT NULL DEFAULT 'New',
+            created_at TEXT NOT NULL
+          )
+        `).run();
+        const id = crypto.randomUUID();
+        const createdAt = new Date().toISOString();
+        await env.DB.prepare(
+          "INSERT INTO demo_inquiries (id, contact_name, matter_type, status, created_at) VALUES (?, ?, ?, ?, ?)"
+        ).bind(id, "Taylor Demo (TEST)", "Demo matter — not a real client", "New", createdAt).run();
+        return json({ ok: true, inquiry: { id, contact_name: "Taylor Demo (TEST)", matter_type: "Demo matter — not a real client", status: "New", created_at: createdAt } }, 201);
+      } catch (error) {
+        return json({ error: "Could not save demo inquiry.", detail: String(error?.message || error) }, 500);
+      }
+    }
+
+    if (url.pathname === "/api/demo/inquiries" && request.method === "GET") {
+      if (!env.DB) return json({ error: "D1 binding DB is missing." }, 503);
+      try {
+        await env.DB.prepare(`
+          CREATE TABLE IF NOT EXISTS demo_inquiries (
+            id TEXT PRIMARY KEY,
+            contact_name TEXT NOT NULL,
+            matter_type TEXT NOT NULL,
+            status TEXT NOT NULL DEFAULT 'New',
+            created_at TEXT NOT NULL
+          )
+        `).run();
+        const result = await env.DB.prepare(
+          "SELECT id, contact_name, matter_type, status, created_at FROM demo_inquiries ORDER BY created_at DESC LIMIT 25"
+        ).all();
+        return json({ ok: true, inquiries: result.results || [] });
+      } catch (error) {
+        return json({ error: "Could not load demo inquiries.", detail: String(error?.message || error) }, 500);
+      }
+    }
+
     if (url.pathname === "/api/intake" && request.method === "POST") {
       return json({
-        error: "Intake storage is not configured yet.",
-        message: "Do not submit real client information until authenticated, tenant-aware storage and access controls are implemented."
+        error: "Real client intake is not enabled yet.",
+        message: "Authenticated firm accounts, tenant isolation, and protected document access must be completed before real client data can be accepted."
       }, 501);
     }
 
